@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şifre Üretici</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            margin: 50px;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        label {
+            font-size: 16px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #password {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 20px;
+            word-wrap: break-word;
+        }
+        input[type="number"]{
+            width: 200px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .mb-3{
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Şifre Üretici</h2>
+        <div class="mb-3">
+            <label for="length">Uzunluk:</label>
+            <input type="number" id="length" value="12" min="4" max="32">
+        </div>
+        <div class="mb-3">
+            <input type="checkbox" id="special">
+            <label for="special">Özel Karakterler Kullan</label>
+        </div>
+        <button onclick="generatePassword()">Şifre Üret</button>
+
+        <h3>Oluşturulan Şifre:</h3>
+        <p id="password"></p>
+    </div>
+
+    <script>
+        async function generatePassword() {
+            const length = document.getElementById('length').value;
+            const special = document.getElementById('special').checked;
+
+            const response = await fetch(`http://localhost:3000/password/generate?length=${length}&special=${special}`);
+            const data = await response.json();
+
+            document.getElementById('password').innerText = data.password;
+        }
+    </script>
+
+</body>
+</html>
